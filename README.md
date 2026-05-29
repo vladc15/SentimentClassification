@@ -1,6 +1,6 @@
 # Sentiment Classification — Code
 
-This repository contains the code for our CIL 2026 project on five-class sentiment classification of English and German product reviews. This README documents the codebase and how to reproduce the results.
+This repository contains the code for our CIL 2026 project on five-class sentiment classification of English and German product reviews. This README documents the codebase and how to reproduce the results. Note that in our code, we reutilized the same notebook for multiple models, modifying parameters accordingly, due to their identical usage. Thus, we only uploaded one notebook per example of approach/analysis, not all of their variations, only adding all notebooks for the title/body ablation to show that our metrics are correct. You can find these notebooks in the `notebooks_sep_title_body` directory.
 
 ---
 
@@ -17,7 +17,7 @@ This repository contains the code for our CIL 2026 project on five-class sentime
 | `ensemble-kaggle.ipynb`                                        | Kaggle version of the ensemble: BERT + XLM-RoBERTa-large + ELECTRA + DistilBERT; averaging, weighted averaging, MLP stacking, expected-value thresholding.  |
 | `final_ensemble.ipynb`                                         | Final 10-block (concat + sep) ensemble with weighted averaging, holdout MLP, K-fold MLP, multi-seed K-fold MLP. Produces the leaderboard submissions.       |
 | `ensemble_level_analysis.ipynb`                                | Ensemble error analysis: per-model F1/accuracy/score, confusion matrices, confidence calibration, disagreement, error magnitude, most-confused class pairs. |
-| `roberta_title_sep_body.ipynb, roberta_title_space_body.ipynb` | Standalone confusion-matrix + classification-report analysis for XLM-RoBERTa-large. On both initial separation and title/body separation.                                                                   |
+| `roberta_title_sep_body.ipynb, roberta_title_space_body.ipynb` | Standalone confusion-matrix + classification-report analysis for XLM-RoBERTa-large. On both initial separation and title/body separation.                   |
 | `lime_roberta.ipynb`                                           | LIME explanations of XLM-RoBERTa-large on correct/incorrect examples per class.                                                                             |
 | `integrated_gradients_roberta.ipynb`                           | Captum Integrated Gradients (tokenlevel attributions) for XLM-RoBERTa-large.                                                                                |
 
@@ -81,16 +81,13 @@ Then launch Jupyter and run the notebooks in the order shown above.
 
 ## 4. Running on a cluster
 
-For long-running jobs (RoBERTa-large fine-tuning, multi-seed K-fold MLPs) we exported the relevant notebook to a Python script and submitted it as a Slurm job.
+For long-running jobs (RoBERTa-large fine-tuning, multi-seed K-fold MLPs) we exported the relevant notebook to a Python script and submitted it as a Slurm job using simple bash scripts.
 
-The notebooks keep configuration (paths, learning rate, batch size, epochs)
-at the top so that hyperparameters can be overridden by editing the generated
-`.py` or by patching environment variables before launch. The committed
-notebooks remain the source of truth.
+The notebooks keep configuration (paths, learning rate, batch size, epochs) at the top so that hyperparameters can be overridden by editing the generated `.py` or by patching environment variables before launch. The committed notebooks remain the source of truth.
 
 ---
 
-## 6. Use of AI tools (disclosure)
+## 5. Use of AI tools (disclosure)
 
 We used AI coding assistants while developing this project. Every AI suggestion that ended up in the codebase was reviewed and edited by the authors before being committed. All design decisions (model selection, ablations, ensembling strategy, evaluation protocol, error analysis), all hyperparameter choices, and all reported numbers come from our own training, inference, and analysis runs. No ready-to-use external prediction API was used to produce any leaderboard submission.
 
