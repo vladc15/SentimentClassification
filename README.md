@@ -6,20 +6,20 @@ This repository contains the code for our CIL 2026 project on five-class sentime
 
 ## 1. Repository layout
 
-| File / directory                      | What it does                                                                                                                                                |
-| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `dataset_analysis.ipynb`              | Class balance, language detection (EN/DE), length analysis, wordclouds, per-class bigrams/trigrams, noisy-sample inspection, preprocessing checks.          |
-| `svm_linear_word2vec_cbow.ipynb`      | Baseline: CBOW Word2Vec + calibrated `LinearSVC`. Reports accuracy, score, classification report, confusion matrix.                                         |
-| `svm_linear_word2vec_skip_gram.ipynb` | Same baseline pipeline with Skip-gram Word2Vec embeddings.                                                                                                  |
-| `main.ipynb`                          | Fine-tunes the multilingual sentiment BERT (`nlptown/bert-base-multilingual-uncased-sentiment`); writes a checkpoint and a submission CSV.                  |
-| `melectra_sep_title_text.ipynb`       | Title/body ablation: fine-tunes `AILabTUL/mELECTRA` with separated title and body inputs.                                                                   |
-| `ensemble.ipynb`                      | Local version of the cross-model ensemble (BERT + XLM-RoBERTa).                                                                                             |
-| `ensemble-kaggle.ipynb`               | Kaggle version of the ensemble: BERT + XLM-RoBERTa-large + ELECTRA + DistilBERT; averaging, weighted averaging, MLP stacking, expected-value thresholding.  |
-| `final_ensemble.ipynb`                | Final 10-block (concat + sep) ensemble with weighted averaging, holdout MLP, K-fold MLP, multi-seed K-fold MLP. Produces the leaderboard submissions.       |
-| `ensemble_level_analysis.ipynb`       | Ensemble error analysis: per-model F1/accuracy/score, confusion matrices, confidence calibration, disagreement, error magnitude, most-confused class pairs. |
-| `roberta_confusion_matrix.ipynb`      | Standalone confusion-matrix + classification-report analysis for XLM-RoBERTa-large alone.                                                                   |
-| `lime_roberta.ipynb`                  | LIME explanations of XLM-RoBERTa-large on correct/incorrect examples per class.                                                                             |
-| `integrated_gradients_roberta.ipynb`  | Captum Integrated Gradients (tokenlevel attributions) for XLM-RoBERTa-large.                                                                                |
+| File / directory                                               | What it does                                                                                                                                                |
+| -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `dataset_analysis.ipynb`                                       | Class balance, language detection (EN/DE), length analysis, wordclouds, per-class bigrams/trigrams, noisy-sample inspection, preprocessing checks.          |
+| `svm_linear_word2vec_cbow.ipynb`                               | Baseline: CBOW Word2Vec + calibrated `LinearSVC`. Reports accuracy, score, classification report, confusion matrix.                                         |
+| `svm_linear_word2vec_skip_gram.ipynb`                          | Same baseline pipeline with Skip-gram Word2Vec embeddings.                                                                                                  |
+| `main.ipynb`                                                   | Fine-tunes the multilingual sentiment BERT (`nlptown/bert-base-multilingual-uncased-sentiment`); writes a checkpoint and a submission CSV.                  |
+| `melectra_sep_title_text.ipynb`                                | Title/body ablation: fine-tunes `AILabTUL/mELECTRA` with separated title and body inputs.                                                                   |
+| `ensemble.ipynb`                                               | Local version of the cross-model ensemble (BERT + XLM-RoBERTa).                                                                                             |
+| `ensemble-kaggle.ipynb`                                        | Kaggle version of the ensemble: BERT + XLM-RoBERTa-large + ELECTRA + DistilBERT; averaging, weighted averaging, MLP stacking, expected-value thresholding.  |
+| `final_ensemble.ipynb`                                         | Final 10-block (concat + sep) ensemble with weighted averaging, holdout MLP, K-fold MLP, multi-seed K-fold MLP. Produces the leaderboard submissions.       |
+| `ensemble_level_analysis.ipynb`                                | Ensemble error analysis: per-model F1/accuracy/score, confusion matrices, confidence calibration, disagreement, error magnitude, most-confused class pairs. |
+| `roberta_title_sep_body.ipynb, roberta_title_space_body.ipynb` | Standalone confusion-matrix + classification-report analysis for XLM-RoBERTa-large. On both initial separation and title/body separation.                                                                   |
+| `lime_roberta.ipynb`                                           | LIME explanations of XLM-RoBERTa-large on correct/incorrect examples per class.                                                                             |
+| `integrated_gradients_roberta.ipynb`                           | Captum Integrated Gradients (tokenlevel attributions) for XLM-RoBERTa-large.                                                                                |
 
 ---
 
@@ -81,14 +81,12 @@ Then launch Jupyter and run the notebooks in the order shown above.
 
 ## 4. Running on a cluster
 
-For long-running jobs (RoBERTa-large fine-tuning, multi-seed K-fold MLPs) we exported the relevant notebook to a Python script and submitted it as a Slurm job:
+For long-running jobs (RoBERTa-large fine-tuning, multi-seed K-fold MLPs) we exported the relevant notebook to a Python script and submitted it as a Slurm job.
 
-```bash
-jupyter nbconvert --to script <notebook>.ipynb
-python <notebook>.py
-```
-
-The notebooks keep configuration (paths, learning rate, batch size, epochs) at the top so that hyperparameters can be overridden by editing the generated `.py` or by patching environment variables before launch. The committed notebooks remain the source of truth.
+The notebooks keep configuration (paths, learning rate, batch size, epochs)
+at the top so that hyperparameters can be overridden by editing the generated
+`.py` or by patching environment variables before launch. The committed
+notebooks remain the source of truth.
 
 ---
 
@@ -103,7 +101,6 @@ We used AI coding assistants while developing this project. Every AI suggestion 
 - **Tool used:** Claude
   **Files affected:** `ensemble_level_analysis.ipynb`, `integrated_gradients_roberta.ipynb`, `lime_roberta.ipynb`
   **Purpose:** Scaffolded the figure-plotting code in these analysis notebooks (per-model and ensemble confusion-matrix heatmaps, disagreement and error-magnitude plots, per-class IG attribution bar charts, and the LIME/Captum HTML visualisation wrappers). The underlying predictions, attributions, and qualitative interpretation were produced and validated by the authors.
-
 
 - **Tool used:** Claude
   **Files affected:** `README.md`
