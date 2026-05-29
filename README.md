@@ -88,20 +88,23 @@ jupyter nbconvert --to script <notebook>.ipynb
 python <notebook>.py
 ```
 
-The notebooks keep configuration (paths, learning rate, batch size, epochs)
-at the top so that hyperparameters can be overridden by editing the generated
-`.py` or by patching environment variables before launch. The committed
-notebooks remain the source of truth.
+The notebooks keep configuration (paths, learning rate, batch size, epochs) at the top so that hyperparameters can be overridden by editing the generated `.py` or by patching environment variables before launch. The committed notebooks remain the source of truth.
 
 ---
 
 ## 6. Use of AI tools (disclosure)
 
-We used AI coding assistants (Cursor with Claude / GPT models, and GitHub Copilot in-editor completions) during development of this project. Their use was limited to:
+We used AI coding assistants while developing this project. Every AI suggestion that ended up in the codebase was reviewed and edited by the authors before being committed. All design decisions (model selection, ablations, ensembling strategy, evaluation protocol, error analysis), all hyperparameter choices, and all reported numbers come from our own training, inference, and analysis runs. No ready-to-use external prediction API was used to produce any leaderboard submission.
 
-- explaining unfamiliar library APIs (e.g. Captum, LIME, PEFT) and helping scaffold boilerplate cells (imports, dataset classes, plotting helpers),
-- generating draft markdown and docstrings that we then edited,
-- refactoring repetitive code and helping debug stack traces,
-- proofreading and reformatting the LaTeX report.
+- **Tool used:** Claude
+  **Files affected:** `roberta_confusion_matrix.ipynb`
+  **Purpose:** Scaffolded the standalone RoBERTa confusion-matrix notebook (data loading, tokenization, prediction loop, confusion-matrix and classification-report plots) by adapting patterns from `ensemble_level_analysis.ipynb` and `svm_linear_word2vec_cbow.ipynb`.
 
-All design decisions (model selection, ablations, ensembling strategy, evaluation protocol, error analysis), all hyperparameter choices, and all reported numbers come from our own training, inference, and analysis runs executed in the notebooks of this repository. No ready-to-use external prediction API was used to produce any leaderboard submission. Every AI suggestion that ended up in the codebase was reviewed and edited by the authors before being committed.
+- **Tool used:** Claude
+  **Files affected:** `ensemble_level_analysis.ipynb`, `integrated_gradients_roberta.ipynb`, `lime_roberta.ipynb`
+  **Purpose:** Scaffolded the figure-plotting code in these analysis notebooks (per-model and ensemble confusion-matrix heatmaps, disagreement and error-magnitude plots, per-class IG attribution bar charts, and the LIME/Captum HTML visualisation wrappers). The underlying predictions, attributions, and qualitative interpretation were produced and validated by the authors.
+
+
+- **Tool used:** Claude
+  **Files affected:** `README.md`
+  **Purpose:** Scaffolded the structure of this README.
